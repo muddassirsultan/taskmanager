@@ -9,6 +9,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterPriority, setFilterPriority] = useState('');
   const [filterCompletion, setFilterCompletion] = useState('');
+  const [selectedTab, setSelectedTab] = useState('dashboard'); // State to track selected tab
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('tasks'));
@@ -33,6 +34,7 @@ function App() {
 
   const currentDate = new Date().toISOString().split('T')[0];
 
+  // Filter tasks based on search term and other filters (priority and completion)
   const filteredTasks = tasks
     .filter(task =>
       task.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -46,32 +48,66 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Task Manager Dashboard</h1>
-      <TaskForm addTask={addTask} />
+      <h1>Task Manager</h1>
 
-      <div className="filters">
-        <input
-          type="text"
-          placeholder="Search Tasks"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <select value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)}>
-          <option value="">All Priorities</option>
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
-        </select>
-        <select value={filterCompletion} onChange={(e) => setFilterCompletion(e.target.value)}>
-          <option value="">All Tasks</option>
-          <option value="Completed">Completed</option>
-          <option value="Pending">Pending</option>
-        </select>
+      {/* Tab Navigation */}
+      <div className="tab-navigation">
+        <button onClick={() => setSelectedTab('dashboard')}>Dashboard</button>
+        <button onClick={() => setSelectedTab('create')}>Create Task</button>
+        <button onClick={() => setSelectedTab('search')}>Search Tasks</button>
       </div>
 
-      <TaskList title="Upcoming Tasks" tasks={upcomingTasks} editTask={editTask} deleteTask={deleteTask} />
-      <TaskList title="Overdue Tasks" tasks={overdueTasks} editTask={editTask} deleteTask={deleteTask} />
-      <TaskList title="Completed Tasks" tasks={completedTasks} editTask={editTask} deleteTask={deleteTask} />
+      {/* Render Components Based on Selected Tab */}
+      {selectedTab === 'dashboard' ? (
+        <div>
+          {/* Task Dashboard (No Search or Filters Here) */}
+          <TaskList title="Upcoming Tasks" tasks={upcomingTasks} editTask={editTask} deleteTask={deleteTask} />
+          <TaskList title="Overdue Tasks" tasks={overdueTasks} editTask={editTask} deleteTask={deleteTask} />
+          <TaskList title="Completed Tasks" tasks={completedTasks} editTask={editTask} deleteTask={deleteTask} />
+        </div>
+      ) : selectedTab === 'create' ? (
+        <div>
+          {/* Create Task Form */}
+          <TaskForm addTask={addTask} />
+        </div>
+      ) : selectedTab === 'search' ? (
+        <div>
+          {/* Search Tasks */}
+          <input
+            type="text"
+            placeholder="Search Tasks"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+
+          {/* Filters for Priority and Completion */}
+          <div className="filters">
+            <select value={filterPriority} onChange={(e) => setFilterPriority(e.target.value)}>
+              <option value="">All Priorities</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+            <select value={filterCompletion} onChange={(e) => setFilterCompletion(e.target.value)}>
+              <option value="">All Tasks</option>
+              <option value="Completed">Completed</option>
+              <option value="Pending">Pending</option>
+            </select>
+          </div>
+
+          {/* Display Filtered Tasks */}
+          {filteredTasks.length === 0 ? (
+            <p>No tasks found</p>
+          ) : (
+            <TaskList
+              title="Search Results"
+              tasks={filteredTasks}
+              editTask={editTask}
+              deleteTask={deleteTask}
+            />
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -2,8 +2,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f4f7;
-    /* Light, friendly background color */
+    background-color: #9986bd;
     margin: 0;
     padding: 0;
     display: flex;
@@ -13,12 +12,42 @@ body {
 }
 
 .App {
-    background-color: #b4a9e1;
-    /* White background for the main container */
+    background-color: #c7e5c6;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Soft shadow for depth */
     max-width: 600px;
     width: 100%;
 }
+
+h1 {
+    text-align: center;
+}
+
+/* Tab navigation styling */
+.tab-navigation {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-navigation button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.tab-navigation button:hover {
+    background-color: #e0e0e0;
+}
+
+.tab-navigation button:focus {
+    outline: none;
+}
+
+/* Add more custom styles for task form, task list, etc. */
