@@ -9,7 +9,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterPriority, setFilterPriority] = useState('');
   const [filterCompletion, setFilterCompletion] = useState('');
-  const [selectedTab, setSelectedTab] = useState('dashboard'); // State to track selected tab
+  const [selectedTab, setSelectedTab] = useState('dashboard'); 
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('tasks'));
@@ -34,7 +34,7 @@ function App() {
 
   const currentDate = new Date().toISOString().split('T')[0];
 
-  // Filter tasks based on search term and other filters (priority and completion)
+  
   const filteredTasks = tasks
     .filter(task =>
       task.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
